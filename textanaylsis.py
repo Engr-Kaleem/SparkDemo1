@@ -1,12 +1,16 @@
+<<<<<<< Updated upstream
 # load hugging face library and model
 
 
+=======
+>>>>>>> Stashed changes
 from transformers import pipeline
 classifier = pipeline("zero-shot-classification", model="MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli")
 
 # load in pandas and numpy for data manipulation
 import pandas as pd
 import numpy as np
+<<<<<<< Updated upstream
 
 
 df = pd.read_csv("dep.csv")
@@ -34,3 +38,14 @@ def predict_sentiment(df, text_column, text_labels):
     result_df = pd.merge(df, result_df, left_on = "text", right_on="sequence", how = "left")
     return result_df
 esults_df = predict_sentiment(df=df, text_column ="text", text_labels= text_labels)
+=======
+df = pd.read_csv("small.csv")
+# Creating a list of emotions to use as labels
+text_labels = ["anticipation", "anger", "disgust", "fear", "joy", "trust"]
+
+
+sample_text = "still have depression symptoms not as bad as they used to be in fact my therapist says im improving a lot but for the past years ive been stuck in this state of emotional numbness feeling disconnected from myself others and the world and time doesnt seem to be passing"
+
+# Run the model on the sample text
+classifier(sample_text, text_labels, multi_label = True)
+>>>>>>> Stashed changes
