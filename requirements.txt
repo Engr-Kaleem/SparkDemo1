@@ -3,3 +3,5 @@ deepface
 matplotlib
 mediapipe
 csv
+os
+cv2
