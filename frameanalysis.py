@@ -59,8 +59,8 @@ def plot_image_annotates(model_output: list, image_path: str, save_file_name: st
         face_bbox = patches.Rectangle((bbx, bby), bbw, bbh, linewidth=0.5, edgecolor='r', facecolor='none')
         ax.add_patch(face_bbox)
     if save_file_name:
-        ax.savefig(save_file_name, bbox_inches='tight')
-    ax.show(block=False)
+        plt.savefig(save_file_name, bbox_inches='tight')
+    plt.show(block=False)
 
 # Specify some code  output parameters
 # specifying whether to plot or not
