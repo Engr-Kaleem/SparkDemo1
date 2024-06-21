@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import matplotlib.patches as patches
 from os import listdir
+import csv
 
 # define some helper functions
 def print_output_console(model_output: list):
@@ -62,19 +63,37 @@ def plot_image_annotates(model_output: list, image_path: str, save_file_name: st
         plt.savefig(save_file_name, bbox_inches='tight')
     plt.show(block=False)
 
+def write_results_csv(model_output: list, frame_count: int):
+    with open('frame_analysis_results.csv', 'a', newline='') as csvfile:
+        fieldnames = ['frame', 'angry', 'disgust', 'fear', 'happy',\
+                    'sad', 'surprise', 'neutral']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+        writer.writeheader()
+        for person in model_output:
+            writer.writerow({'frame':frame_count, 'angry':person['emotion']['angry'], 
+                            'disgust':person['emotion']['disgust'], 
+                            'fear':person['emotion']['fear'], 
+                            'happy':person['emotion']['happy'], 
+                            'sad':person['emotion']['sad'], 
+                            'surprise':person['emotion']['surprise'], 
+                            'neutral':person['emotion']['neutral']})
+            
+
 # Specify some code  output parameters
 # specifying whether to plot or not
 produce_plots = True
 save_plots = True
 print_to_console = True
 
-for input_image in listdir('images'):
+for frame_number, input_image in enumerate(listdir('images')):
     input_image_path = 'images/' + input_image 
     # calculating the features
     face_analysis = DeepFace.analyze(img_path=input_image_path,
                             actions=['age', 'gender', 'race', 'emotion'], 
                             detector_backend='mediapipe')
 
+    write_results_csv(model_output=face_analysis, frame_count=frame_number)
 
     if produce_plots and save_plots:
         save_image_filename = 'results/Annotated_' + input_image.split('.')[0] + '.png' 
