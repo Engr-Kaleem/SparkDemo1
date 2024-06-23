@@ -15,20 +15,20 @@ text_labels = ["anticipation", "anger", "disgust", "fear", "joy", "trust"]
 result=classifier(sample_text, text_labels, multi_label = False)
 print(result)
 
-df = pd.read_csv("small.csv")
+# df = pd.read_csv("small.csv")
 
 
-def predict_sentiment(df, text_column, text_labels):
-    result_list = []
-    for index, row in df.iterrows():
-        sequence_to_classify = row[text_column]
-        result = classifier(sequence_to_classify, text_labels, multi_label = False)
-        result['sentiment'] = result['labels'][0]
-        result['score'] = result['scores'][0]
-        print(result)
-        result_list.append(result)
-    result_df = pd.DataFrame(result_list)[['sequence','sentiment', 'score']]
-    result_df = pd.merge(df, result_df, left_on = "text", right_on="sequence", how = "left")
-    return result_df
+# def predict_sentiment(df, text_column, text_labels):
+#     result_list = []
+#     for index, row in df.iterrows():
+#         sequence_to_classify = row[text_column]
+#         result = classifier(sequence_to_classify, text_labels, multi_label = False)
+#         result['sentiment'] = result['labels'][0]
+#         result['score'] = result['scores'][0]
+#         print(result)
+#         result_list.append(result)
+#     result_df = pd.DataFrame(result_list)[['sequence','sentiment', 'score']]
+#     result_df = pd.merge(df, result_df, left_on = "text", right_on="sequence", how = "left")
+#     return result_df
 
-results_df = predict_sentiment(df=df, text_column ="text", text_labels= text_labels)
+# results_df = predict_sentiment(df=df, text_column ="text", text_labels= text_labels)
